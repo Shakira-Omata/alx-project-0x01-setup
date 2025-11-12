@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UserCard from '@/components/common/UserCard';
 import UserModal from '@/components/common/UserModal';
 import Header from '@/components/layout/Header';
-import { UserProps, UserData } from '@/interfaces';
+import { UserProps } from '@/interfaces';
 
 interface UsersProps {
   posts: UserProps[];
@@ -10,9 +10,9 @@ interface UsersProps {
 
 const Users: React.FC<UsersProps> = ({ posts }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [newUser, setNewUser] = useState<UserData | null>(null);
+  const [newUser, setNewUser] = useState<UserProps | null>(null);
 
-  const handleAddUser = (user: UserData) => {
+  const handleAddUser = (user: UserProps) => {
     setNewUser({ ...user, id: posts.length + 1 });
     console.log('New user added:', user);
   };
