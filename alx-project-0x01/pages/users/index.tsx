@@ -1,21 +1,37 @@
 import React from 'react';
+import UserCard from '@/components/common/UserCard';
+import { UserProps } from '@/interfaces';
 
-const Users: React.FC = () => {
+interface UsersProps {
+  posts: UserProps[];
+}
+
+const Users: React.FC<UsersProps> = ({ posts }) => {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-6">Users</h1>
-      <div className="space-y-4">
-        <div className="border rounded-lg p-4 shadow">
-          <h3 className="text-xl font-semibold">User 1</h3>
-          <p className="text-gray-600">user1@example.com</p>
-        </div>
-        <div className="border rounded-lg p-4 shadow">
-          <h3 className="text-xl font-semibold">User 2</h3>
-          <p className="text-gray-600">user2@example.com</p>
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
+          Users Directory
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((user) => (
+            <UserCard key={user.id} {...user} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
+export async function getStaticProps() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const posts = await response.json();
+
+  return {
+    props: {
+      posts
+    }
+  };
+}
 
 export default Users;
